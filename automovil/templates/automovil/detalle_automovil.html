@@ -1,0 +1,23 @@
+{% extends "base.html"%}
+
+{% block title_head %}
+<title>Automovil{{automoviles.id}}</title>
+{% endblock title_head %}
+
+
+{% block h1_header %}
+Automovil {{automoviles.id}}
+{% endblock h1_header %}
+{% block h2_header %}{% endblock h2_header %}
+
+
+{% block main %}
+
+<ul>
+    <li>Marca: {{automovil.marca}}</li>
+    <li>Modelo: {{automovil.modelo}}</li>
+    <li>Descripcion: {{automovil.descripcion}}</li>
+    <li>Fecha de Creacion: {{automovil.fecha_creacion}}</li>
+</ul>
+
+{% endblock main %}

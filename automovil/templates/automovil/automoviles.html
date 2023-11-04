@@ -1,0 +1,35 @@
+{% extends "base.html"%}
+
+{% block title_head %}
+<title>Automoviles</title>
+{% endblock title_head %}
+
+
+{% block h1_header %}
+Automoviles
+{% endblock h1_header %}
+{% block h2_header %}{% endblock h2_header %}
+
+
+{% block main %}
+<p>
+    <a href={% url "crear_automovil" %}>Crear Automovil</a>
+</p>
+
+
+{% if listado_de_automoviles %}
+
+<ul>
+    {% for automoviles in listado_de_automoviles %}    
+    
+    <li> <a href={% url "detalle_automovil" automoviles.id %}> {{automoviles}} </a>  <a href={% url "actualizar_automovil" automoviles.id %}>Actualizar</a> <a href={% url "eliminar_automovil" automoviles.id %}>Eliminar</a> </li>
+        {% endfor %}  
+</ul>
+
+
+{% else %}
+
+<p>No se encontraron automoviles.</p>
+
+{% endif %}
+{% endblock main %}

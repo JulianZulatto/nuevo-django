@@ -1,0 +1,24 @@
+{% extends "base.html"%}
+
+{% block title_head %}
+<title>Eliminar Automovil</title>
+{% endblock title_head %}
+
+
+{% block h1_header %}
+Eliminar Automovil
+{% endblock h1_header %}
+{% block h2_header %}{% endblock h2_header %}
+
+
+{% block main %}
+
+
+
+<form action="" method="POST">
+    {% csrf_token %}  
+    Desea eliminar el automovil {{automoviles.marca}} - {{automoviles.modelo}} - {{automoviles.fecha_de_creacion}}?
+    <input type="submit" value="Confirmar">  
+</form>
+
+{% endblock main %}

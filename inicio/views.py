@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from inicio.models import Paleta
 # from django.template import loader
 # from django.http import HttpResponse
-from inicio.forms import CrearPaletaFormulario
+from inicio.forms import CrearPaletaFormulario, ActualizarPaletaFormulario
 
 # Create your views here.
 def inicio(request):
@@ -69,4 +69,32 @@ def crear_paleta(request):
     formulario = CrearPaletaFormulario()
     return render(request, 'inicio/crear_paleta.html', {'formulario': formulario})
     
+def eliminar_paleta(request, paleta_id):
+    paleta_a_eliminar = Paleta.objects.get(id=paleta_id)
+    paleta_a_eliminar.delete()
+    return redirect("paletas")
+
+def actualizar_paleta(request, paleta_id):
+    paleta_a_actualizar = Paleta.objects.get(id=paleta_id)
     
+    if request.method == "POST":
+        formulario = ActualizarPaletaFormulario(request.POST)
+        if formulario.is_valid():
+            info_nueva = formulario.cleaned_data
+            
+            paleta_a_actualizar.marca = info_nueva.get('marca')
+            paleta_a_actualizar.descripcion = info_nueva.get('descripcion')
+            paleta_a_actualizar.anio = info_nueva.get('anio')
+            
+            paleta_a_actualizar.save()
+            return redirect('paletas')
+        else:
+            return render(request, 'inicio/actualizar_paleta.html', {'formulario': formulario})
+            
+    formulario = ActualizarPaletaFormulario(initial={'marca': paleta_a_actualizar.marca,'descripcion': paleta_a_actualizar.descripcion, 'anio': paleta_a_actualizar.anio })
+    return render(request, 'inicio/actualizar_paleta.html', {'formulario' : formulario})
+
+def detalle_paleta(request,paleta_id):
+    paleta = Paleta.objects.get(id=paleta_id)
+    
+    return render(request, 'inicio/detalle_paleta.html', {'paleta': paleta})
