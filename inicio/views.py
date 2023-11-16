@@ -3,6 +3,7 @@ from inicio.models import Paleta
 # from django.template import loader
 # from django.http import HttpResponse
 from inicio.forms import CrearPaletaFormulario, ActualizarPaletaFormulario
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def inicio(request):
@@ -29,6 +30,7 @@ def paletas(request):
     
     return render(request, 'inicio/paletas.html', {'listado_de_paletas': listado_de_paletas})
 
+@login_required
 def crear_paleta(request):
     
     #V1 (HTML)
@@ -68,12 +70,14 @@ def crear_paleta(request):
     
     formulario = CrearPaletaFormulario()
     return render(request, 'inicio/crear_paleta.html', {'formulario': formulario})
-    
+
+@login_required 
 def eliminar_paleta(request, paleta_id):
     paleta_a_eliminar = Paleta.objects.get(id=paleta_id)
     paleta_a_eliminar.delete()
     return redirect("paletas")
 
+@login_required
 def actualizar_paleta(request, paleta_id):
     paleta_a_actualizar = Paleta.objects.get(id=paleta_id)
     
@@ -98,3 +102,5 @@ def detalle_paleta(request,paleta_id):
     paleta = Paleta.objects.get(id=paleta_id)
     
     return render(request, 'inicio/detalle_paleta.html', {'paleta': paleta})
+
+
